@@ -1,0 +1,81 @@
+\documentclass[12pt, a4paper]{article}
+% A documentação de qualquer pacote pode ser vista com "texdoc pacote" no terminal
+
+% input em utf8
+\usepackage[utf8]{inputenc}
+
+% pacotes matemáticos
+\usepackage{amsfonts, amsmath, amssymb, mathtools, latexsym, bbm}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\usepackage{enumitem}
+
+\usepackage{multicol}
+\usepackage{setspace}
+
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definição}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolário}
+\newtheorem{conjecture}[theorem]{Conjectura}
+
+% COMANDOS
+\newcommand\CPU{\Omega}
+\newcommand\MEMORY{\Phi}
+\newcommand\STORAGE{\Gamma}
+\newcommand\Ind{\mathbbm{1}}
+
+\newcommand\cpu{\omega}
+\newcommand\bandwidth{\beta}
+\newcommand\memory{\phi}
+\newcommand\storage{\gamma}
+\newcommand\threshold{\tau}
+\newcommand\position{c_{t}}
+
+\usepackage{hyperref}
+\usepackage{todonotes}
+\usepackage{fullpage}
+% \pagestyle{empty}
+\pagenumbering{arabic}
+
+\sloppy
+
+\linespread{1.4} 
+
+\usepackage[brazil]{babel}
+
+\begin{document}
+
+\textbf{PLI do projeto (rascunho do modelo preliminar)}
+\\
+
+Mapeamento $\sigma: \mathcal{V} \rightarrow \{\mathcal{N},\bot\}$, em que $\sigma$ representa uma função que devolve $n \in \mathcal{N}$ caso $v \in \mathcal{V}$ do parâmetro de entrada possa ser alocado em uma \emph{Cloudlet} $n$, ou devolve $0$ caso o $v$ tenha que ser alocado na Cloud.
+\begin{equation}\label{def:sigma_x_1}
+    x_{n, v} = 1 \text{ se e somente se } \sigma(v) = n \text{ e } n \in \mathcal{N}
+\end{equation}
+\begin{alignat}{4}
+\mathrm{(P1)} \quad & \omit\rlap{Minimize $\displaystyle \sum_{v \in \mathcal{V}} x_{0,v}$}\nonumber\\
+                   & \mbox{sujeito a} && \quad & \sum_{v \in \mathcal{V}} \storage_v \cdot x_{n, v} \leq \STORAGE_{n}      &\qquad & \forall\, n \in \mathcal{N} \label{pl:C11}\\
+                   &                  && \quad & \sum_{v \in \mathcal{V}} \cpu_v \cdot x_{n, v} \leq \CPU_{n}      &\qquad & \forall\, n \in \mathcal{N} \label{pl:C12}\\
+                   &                  && \quad & \sum_{v \in \mathcal{V}} \memory_v \cdot x_{n, v} \leq \MEMORY_{n}      &\qquad & \forall\, n \in \mathcal{N} \label{pl:C13}\\
+                %   &                  && \quad & d(\sigma(v),\position) \leq \threshold_{v} \text{ se } \sigma(v) \neq \bot      &\qquad & \forall\, n \in \mathcal{N}, c_t \in \mathcal{N} \label{pl:C14}\\
+                %   &                  && \quad & \sum_{n \in \mathcal{N}} d(n,c_t) \cdot x_{n, v} \leq \threshold_{v}      &\qquad & \forall\, v \in \mathcal{V} \label{pl:C13}\\
+                   &                  && \quad & \sum_{n \in \mathcal{N}} x_{n, v} = 1    &\qquad & \forall\, v \in \mathcal{V} \label{pl:C13}\\
+                   &                  &&       &  x_{n,v}                           & \in \{0,1\} &       & \forall\, v \in \mathcal{V}\nonumber
+\end{alignat}
+
+\begin{alignat}{4}
+\mathrm{(P2)} \quad & \omit\rlap{Minimize $\displaystyle \sum_{v \in \mathcal{V}} \sum_{n \in \mathcal{N}} d(n,c_t) \cdot x_{n, v}$}\nonumber\\
+                   & \mbox{sujeito a} && \quad & \sum_{v \in \mathcal{V}} \storage_v \cdot x_{n, v} \leq \STORAGE_{n}      &\qquad & \forall\, n \in \mathcal{N} \label{pl:C11}\\
+                   &                  && \quad & \sum_{v \in \mathcal{V}} \cpu_v \cdot x_{n, v} \leq \CPU_{n}      &\qquad & \forall\, n \in \mathcal{N} \label{pl:C12}\\
+                   &                  && \quad & \sum_{v \in \mathcal{V}} \memory_v \cdot x_{n, v} \leq \MEMORY_{n}      &\qquad & \forall\, n \in \mathcal{N} \label{pl:C13}\\
+                %   &                  && \quad & \sum_{n \in \mathcal{N}} d(n,c_t) \cdot x_{n, v} \leq \threshold_{v}      &\qquad & \forall\, v \in \mathcal{V} \label{pl:C13}\\
+                   &                  && \quad & \sum_{n \in \mathcal{N}} x_{n, v} = 1    &\qquad & \forall\, v \in \mathcal{V} \label{pl:C13}\\
+                   &                  &&       &  x_{n,v}                           & \in \{0,1\} &       & \forall\, v \in \mathcal{V}\nonumber
+\end{alignat}
+
+\end{document}
